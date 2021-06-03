@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x mr-2">
+                        <widget-svg-icon [icon]="configComponent.icon"></widget-svg-icon>
+                    </span>
+                    <h3 class="card-label">
+                        {{ configComponent.title }}
+                        <small>{{ configComponent.description }}</small>
+                    </h3>
+                </div>
+                <div class="card-toolbar">
+                    <!--TOOLBAR-->
+                    <ng-content select="[toolbar]"></ng-content>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- CONTENT-->
+                <ng-content select="[content]"></ng-content>
+            </div>
+            <div class="card-footer">
+                <div class="float-right">
+                    <ng-content select="[buttons]"></ng-content>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

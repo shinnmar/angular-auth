@@ -1,0 +1,17 @@
+<!-- <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center d-block">
+    <img class="symbol-label" [src]="path" />
+</div> -->
+<ng-container *ngIf="typeIcon">
+    <div class="d-flex justify-content-center">
+        <div class="image-content">
+            <img class="rounded" [hidden]="loading" [src]="defaultPath" (load)="loaded()" />
+            <mat-spinner *ngIf="loading" [diameter]="50"></mat-spinner>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="!typeIcon">
+    <img class="img-fluid img-src rounded" [hidden]="loading" [src]="defaultPath" (load)="loaded()" (error)="error()" />
+    <mat-spinner class="img-spinner m-auto" *ngIf="loading" [diameter]="50"></mat-spinner>
+</ng-container>

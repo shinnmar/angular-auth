@@ -1,0 +1,58 @@
+<dialog-with-form [configComponent]="configComponent" (closeDialog)="dialogRef.close($event)" size="md">
+
+    <ng-container dialogForm>
+        <div class="row">
+            <div class="col-lg-6">
+
+                <widget-input-text label="Nombre" name="name" [(ngModel)]="obj.Name">
+                </widget-input-text>
+
+                <widget-input-textarea label="TextArea" name="textarea" [(ngModel)]="textarea"></widget-input-textarea>
+
+                <widget-dropdown label="Marcas" name="brand" [(ngModel)]="objFeatureModel"
+                    (change)="changeDropdown($event)"></widget-dropdown>
+
+                <widget-input-number label="Numero" name="number" [(ngModel)]="inputNumber"></widget-input-number>
+
+                <widget-calendar label="Calendario" name="calendar" [min]="minDate" (dateChange)="changeDate($event)"
+                    [btnCancelApply]="true" [(ngModel)]="datepicker">
+                </widget-calendar>
+
+            </div>
+            <!-- <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="flex-vcenter">Icono:
+                        <span class="text-danger">*</span>
+                        <i class="fas fa-info-circle ml-2"
+                            ngbTooltip="Solo se permiten archivos JPG y PNG (tamaño recomendado: 100px x 100px)"
+                            placement="right"></i>
+                        <span>
+                            <widget-svg-icon icon="info" placement="right"
+                                ngbTooltip="Solo se permiten archivos JPG y PNG de 100px x 100px"></widget-svg-icon>
+                        </span>
+                    </label>
+                    <div class="image-widget w-100">
+                        <widget-img-s3 class="img-feature" [path]="obj.iconFile"></widget-img-s3>
+                    </div>
+                </div>
+                <div class="form-group d-flex">
+                    <widget-input-type-file #iconFile fileType="images" (files)="changeLogoFile($event)">
+                    </widget-input-type-file>
+                    <button type="button" (click)="iconFile.open()" class="btn btn-outline-primary mx-auto">
+                        <i class="fas fa-plus mr-2"></i>Agregar Icono
+                    </button>
+                </div>
+            </div> -->
+        </div>
+
+
+
+
+    </ng-container>
+
+    <ng-container buttons>
+        <button (click)="save()" type="reset" class="btn btn-light-success mr-2"><i
+                class="fas fa-save mr-2"></i>Guardar</button>
+    </ng-container>
+
+</dialog-with-form>

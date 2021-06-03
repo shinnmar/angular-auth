@@ -1,0 +1,53 @@
+<div class="form-group">
+    <label>{{label}}</label>
+    <div #containerInput (click)="openOptions(!isOpen)" class="input-icon input-icon-right" [hidden]="loading"
+        #trigger="cdkOverlayOrigin" cdkOverlayOrigin>
+        <input #inputNgModel="ngModel" class="cursor-pointer" input-safe [required]="required"
+            [validations]="validations" [name]="name" [(ngModel)]="text" [placeholder]="textNone" [disabled]="!editable"
+            readonly>
+        <span>
+            <widget-svg-icon icon="angle-down" class="icon-select" [ngClass]="{'r180':isOpen}"></widget-svg-icon>
+        </span>
+    </div>
+    <div *ngIf="loading" class="input-icon input-icon-right">
+        <mat-spinner [diameter]="25"></mat-spinner>
+    </div>
+</div>
+
+<ng-template #options cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayScrollStrategy]="strategy.close()" (overlayOutsideClick)="outsideClick($event)"
+    (detach)="openOptions(false)">
+    <div style="background-color: white; border-radius: 0.42rem; box-shadow: 0 0px 10px 0 rgb(82 63 105 / 25%);padding: 5px"
+        [style.width.px]="width">
+
+        <div class="row">
+            <div class="col m-2">
+                <div class="form-group m-0">
+                    <div class="input-icon">
+                        <input #searchInput focus type="text" class="form-control" placeholder="Buscar..."
+                            (keyup)="search(searchInput.value)" />
+                        <span><i class="flaticon2-search-1 icon-md"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="navi navi-hover scrollSelect">
+
+            <li *ngIf="showNone" class="navi-item" style="cursor: pointer;">
+                <a (click)="clickItem(null)" [ngClass]="{'active': isNone}" class="navi-link">
+                    <span class="navi-text">{{ textNone }}</span>
+                </a>
+            </li>
+
+            <li class="navi-item" style="cursor: pointer;">
+                <a (click)="clickItem(item)" *ngFor="let item of list" [ngClass]="{'active': item[keyId] == idSelected}"
+                    class="navi-link">
+                    <span class="navi-text">{{ getName(item)}}</span>
+                </a>
+            </li>
+        </ul>
+
+
+    </div>
+</ng-template>

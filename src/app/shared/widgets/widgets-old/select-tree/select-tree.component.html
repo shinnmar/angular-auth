@@ -1,0 +1,47 @@
+<div (click)="openOptions(!isOpen)" class="input.group input-icon input-icon-right" [hidden]="loading">
+    <input #input input-safe readonly [validations]="[(isRequired)? 'required': 'no-required']" [asterisk]="false"
+        [name]="idControl" [placeholder]="textNinguno" [disabled]="!editable" [(ngModel)]="nameSelect" cdkOverlayOrigin
+        #trigger="cdkOverlayOrigin" class="form-control" style="cursor: default;" type="text" autocomplete="off">
+    <span>
+        <!-- <widget-svg-icon [icon]="isOpen ? 'angle-up' : 'angle-down'"></widget-svg-icon> -->
+        <widget-svg-icon icon="angle-down" class="icon-select" [ngClass]="{'r180':isOpen}"></widget-svg-icon>
+    </span>
+</div>
+
+<ng-template #options cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayScrollStrategy]="strategy.close()" (overlayOutsideClick)="outsideclick($event)"
+    (detach)="openOptions(false)">
+    <div style="background-color: white; border-radius: 0.42rem; box-shadow: 0 0px 10px 0 rgb(82 63 105 / 25%);padding: 5px"
+        [style.width.px]="width">
+
+        <div class="p-4">
+            <ng-container *ngFor="let option of optionsListTree">
+
+                <div *ngIf="option['Children']?.length == 0" class="radio-list mb-5">
+                    <label class="radio radio-primary">
+                        <input type="radio" name="radio-tree" [value]="option[id]" (click)="clickItem(option)"
+                            [(ngModel)]="idSelect">
+                        {{getName(option)}}
+                        <span class="ml-auto"></span>
+                    </label>
+                </div>
+
+                <div class="mb-5" *ngIf="option['Children']?.length > 0">
+                    <p class="font-weight-bolder">{{getName(option)}}</p>
+                    <div class="radio-list ml-3">
+                        <label *ngFor="let children of option['Children']" class="radio radio-primary">
+                            <input type="radio" name="radio-tree" [value]="children[id]" (click)="clickItem(children)"
+                                [(ngModel)]="idSelect">
+                            {{getName(children)}}
+                            <span class="ml-auto"></span>
+                        </label>
+                    </div>
+                </div>
+
+            </ng-container>
+        </div>
+
+    </div>
+</ng-template>
+
+<mat-spinner *ngIf="loading" [diameter]="25"></mat-spinner>

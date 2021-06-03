@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="svg-icon svg-icon-primary svg-icon-3x mr-2">
+                        <widget-svg-icon [icon]="configComponent.icon"></widget-svg-icon>
+                    </span>
+                    <h3 class="card-label">
+                        {{ configComponent.title }}
+                        <small>{{ configComponent.description }}</small>
+                    </h3>
+                </div>
+                <div class="card-toolbar">
+                    <!--TOOLBAR SELECTION MULTIPLE TABLE-->
+                    <ng-content *ngIf="selection.selected.length > 0" select="[toolbar-table]"></ng-content>
+
+                    <button type="button" *ngIf="selection.selected.length > 0" (click)="deleteSelected()"
+                        class="btn btn-light-danger mr-2">
+                        <i class="fas fa-trash-alt mr-2"></i>Eliminar <b>({{ selection.selected.length }})</b></button>
+
+                    <!--TOOLBAR-->
+                    <ng-content select="[toolbar]"></ng-content>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- FILTROS-->
+                <ng-content select="[filters-group]"></ng-content>
+
+                <div class="mat-table-wrapper">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="check">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox *ngIf="validator(row)" (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)">
+                                </mat-checkbox>
+                                <!-- <mat-checkbox *ngIf="(!isOnlyUserAccess) || (isOnlyUserAccess && row.IdCatalog !== userId)" (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)">
+                                </mat-checkbox> -->
+                                <!-- <div class="checkbox-inline">
+                                    <label class="checkbox checkbox-rounded">
+                                        <input type="checkbox" (click)="$event.stopPropagation()"
+                                            (change)="$event.target.checked ? selection.toggle(row) : null"
+                                            [checked]="selection.isSelected(row)" />
+                                        <span></span>
+                                    </label>
+                                </div> -->
+                            </td>
+                        </ng-container>
+
+                        <!--CONTENIDO DE LA TABLA-->
+                        <ng-content select="[table-content]"></ng-content>
+
+                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+
+                    </table>
+
+                    <div class="mat-table-message" *ngIf="!dataSource.data.length">
+                        <div class='no_coment_icono'>
+                            <div>
+                                <div><i class='fas fa-th'></i></div>
+                                <div class='no_coment_text'>Ningún dato disponible en esta tabla</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mat-table-message" *ngIf="loading">Espere...</div>
+                </div>
+
+                <div class="mat-table-bottom">
+                    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+                    <mat-paginator [pageSize]="50" [pageSizeOptions]="[10,50,100]" [showFirstLastButtons]="true">
+                    </mat-paginator>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

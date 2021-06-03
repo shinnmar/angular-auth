@@ -1,0 +1,14 @@
+.tags{
+    padding: 1.5rem 1rem;
+    border: 1px solid #E4E6EF;
+    position: relative;
+    margin-top: 2rem;
+    border-radius: 10px;
+    .title{
+        position: absolute;
+        top: -0.8rem;
+        left: 8px;
+        background-color: white;
+        padding: 0 10px;
+    }
+}

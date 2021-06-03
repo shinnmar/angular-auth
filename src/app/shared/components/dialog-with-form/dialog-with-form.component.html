@@ -1,0 +1,28 @@
+<div class="modal-content" [ngClass]="modalSize">
+    <div class="modal-header">
+        <span class="svg-icon svg-icon-primary svg-icon-2x mr-2">
+            <widget-svg-icon [icon]="configComponent.icon"></widget-svg-icon>
+        </span>
+        <h5 class="modal-title">{{ configComponent.title }}
+            <span class="text-muted ml-5 font-weight-bolder font-size-lg">{{ configComponent.description }}
+            </span>
+        </h5>
+
+        <button type="button" (click)="closeDialog.emit(null)" class="close" aria-label="Close">
+            <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+    </div>
+
+    <form cdkScrollable #form="ngForm" class="modal-body wizardModal">
+        <ng-content select="[dialogForm]"></ng-content>
+    </form>
+
+    <div class="modal-footer">
+        <div class="mr-auto">
+            <span class="text-danger">*</span> Campos obligatorios
+        </div>
+
+        <ng-content select="[buttons]"></ng-content>
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="form-group">
+    <label>{{label}}:</label>
+    <div class="input-icon input-icon-right" (click)="picker.open()">
+        <input #inputNgModel="ngModel" class="cursor-pointer" input-safe matInput [required]="required" [name]="name"
+            [matDatepicker]="picker" [min]="min" [max]="max" [matDatepickerFilter]="datePickerFilter"
+            (dateChange)="dateChange.emit($event.value)" [(ngModel)]="value" readonly>
+        <mat-datepicker #picker>
+            <mat-datepicker-actions *ngIf="btnCancelApply">
+                <button matDatepickerCancel>Cancel</button>
+                <button matDatepickerApply>Apply</button>
+            </mat-datepicker-actions>
+        </mat-datepicker>
+        <span class="cursor-pointer">
+            <i class="far fa-calendar-alt"></i>
+        </span>
+    </div>
+</div>

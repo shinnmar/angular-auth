@@ -1,0 +1,51 @@
+<div (click)="openOptions(!isOpen)" class="input.group input-icon input-icon-right" [hidden]="loading">
+    <input #input input-safe readonly [validations]="[(isRequired)? 'required': 'no-required']" [asterisk]="false"
+        [name]="idControl" [placeholder]="textNinguno" [disabled]="!editable" [(ngModel)]="nameSelect" cdkOverlayOrigin
+        #trigger="cdkOverlayOrigin" class="form-control cursor-pointer" type="text" autocomplete="off">
+    <span>
+        <!-- <widget-svg-icon [icon]="isOpen ? 'angle-up' : 'angle-down'"></widget-svg-icon> -->
+        <widget-svg-icon icon="angle-down" class="icon-select" [ngClass]="{'r180':isOpen}"></widget-svg-icon>
+    </span>
+</div>
+
+<ng-template #options cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayScrollStrategy]="strategy.close()" (overlayOutsideClick)="outsideclick($event)"
+    (detach)="openOptions(false)">
+    <div style="background-color: white; border-radius: 0.42rem; box-shadow: 0 0px 10px 0 rgb(82 63 105 / 25%);padding: 5px"
+        [style.width.px]="width">
+
+        <!-- <div class="row">
+            <div class="col m-2">
+                <div class="form-group m-0">
+                    <div class="input-icon">
+                        <input #searchInput focus type="text" class="form-control" placeholder="Buscar..."
+                            (keyup)="search(searchInput.value)" />
+                        <span><i class="flaticon2-search-1 icon-md"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <ul class="navi navi-hover scrollSelect">
+
+            <ng-container *ngFor="let groupOption of listGroup">
+                <li class="navi-header pb-1">
+                    <span class="text-uppercase font-size-sm font-gb">{{groupOption.Group.NameGroup}}</span>
+                </li>
+                <li class="navi-item" style="cursor: pointer;">
+                    <a (click)="clickItem(item, groupOption.Group)" *ngFor="let item of groupOption.List"
+                        [ngClass]="{'active': item[groupOption.Group.Id] == idSelect}" class="navi-link">
+                        <!-- <span class="navi-icon">
+                            <widget-svg-icon></widget-svg-icon>
+                        </span> -->
+                        <span class="navi-text ml-3">{{ getName(item, groupOption.Group)}}</span>
+                    </a>
+                </li>
+            </ng-container>
+
+        </ul>
+
+    </div>
+</ng-template>
+
+<mat-spinner *ngIf="loading" [diameter]="25"></mat-spinner>

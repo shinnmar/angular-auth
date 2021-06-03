@@ -1,0 +1,31 @@
+<div cdkScrollable class="card-body wizardModal">
+    <!-- FILTROS-->
+    <ng-content select="[filters-group]"></ng-content>
+
+    <div class="mat-table-wrapper">
+        <table mat-table [dataSource]="dataSource">
+
+            <!--CONTENIDO DE LA TABLA-->
+            <ng-content select="[table-content]"></ng-content>
+
+        </table>
+
+        <div class="mat-table-message" *ngIf="!dataSource.data.length">
+            <div class='no_coment_icono'>
+                <div>
+                    <div><i class='fas fa-th'></i></div>
+                    <div class='no_coment_text'>Ningún dato disponible en esta tabla</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mat-table-message" *ngIf="loading">Espere...</div>
+    </div>
+
+    <div class="mat-table-bottom">
+        <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10,50,100]" [showFirstLastButtons]="true">
+        </mat-paginator>
+    </div>
+
+</div>
